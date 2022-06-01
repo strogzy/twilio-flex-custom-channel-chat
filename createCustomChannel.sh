@@ -1,0 +1,11 @@
+curl -X POST https://flex-api.twilio.com/v1/FlexFlows \
+--data-urlencode "IntegrationType=studio" \
+--data-urlencode "Enabled=True" \
+--data-urlencode "Integration.FlowSid=FWxx" \
+--data-urlencode "ContactIdentity=viber" \
+--data-urlencode "FriendlyName=Viber Flex Flow" \
+--data-urlencode "ChannelType=custom" \
+--data-urlencode "ChatServiceSid=ISxx" \
+--data-urlencode "longLived=true" \
+--data-urlencode "janitorEnabled=true" \
+-u {ACCOUNT_SID}:{AUTH_TOKEN}
