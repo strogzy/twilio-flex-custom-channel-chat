@@ -1,9 +1,9 @@
 
 
-async function createNewChannel(flexFlowSid, flexChatService, chatUserName, client, domainName) {
+async function createNewChannel(flexFlowSid, flexChatService, channelData, client, domainName) {
   console.log("creating new channel");
   let newChannelSid = '';
-  
+  let chatUserName = channelData.fromNumber;
   let newChannelCreated = await client.flexApi.channel
   .create({
     flexFlowSid: flexFlowSid,
@@ -44,7 +44,7 @@ async function createNewChannel(flexFlowSid, flexChatService, chatUserName, clie
     let webhook1 = await client.chat.services(flexChatService).channels(newChannelCreated.sid).webhooks.create({
       type: "webhook",
       "configuration.method": "POST",
-      "configuration.url": `https://${domainName}/on-flex-message?channel=${newChannelCreated.sid}`,
+      "configuration.url": `https://${domainName}/on-flex-message?channel=${newChannelCreated.sid}&type=${channelData.channel}`,
       "configuration.filters": ["onMessageSent"],
     });
     let webhook2 = await client.chat.services(flexChatService).channels(newChannelCreated.sid).webhooks.create({

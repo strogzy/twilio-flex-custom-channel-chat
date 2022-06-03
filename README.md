@@ -24,4 +24,18 @@ Related blog post: https://www.twilio.com/blog/add-custom-chat-channel-twilio-fl
 
 Now the URL given as a result for the deploy command, specifically the url for the `/message` function can be used for sending messages into Flex. 
 
+## Connectors
+
+Currently this repo has adapters for the following custom channels:
+- Viber
+- Telerivet
+
+
+
+
+## ToDo
+
+- Check set webhooks. If new is different to existing, overwrite the webhooks so that old chats still work with new updated changes.
+- Attach channel type not to webhook but to the participant attributes
+
 
