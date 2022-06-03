@@ -9,12 +9,15 @@ const flexChatService = process.env.FLEX_CHAT_SERVICE;
 // message received from customer
 exports.handler = async (context, event, callback) => {
     console.log("event", event);
-    const fromNumber = event.phone_number;
-    const msg = event.message["text"];
+
+    const {checkChannel} = require(Runtime.getFunctions()['adapters/index'].path);
+    const channelData = checkChannel(event);
+
     console.log("Sending new chat message");
+
     let client = context.getTwilioClient();
     const {createNewChannel} = require(Runtime.getFunctions()['helpers/index'].path);
-    let flexChannelCreatedSid = await createNewChannel(flexFlowSid, flexChatService, fromNumber, client, context.DOMAIN_NAME);
+    let flexChannelCreatedSid = await createNewChannel(flexFlowSid, flexChatService, channelData, client, context.DOMAIN_NAME );
     console.log(flexChannelCreatedSid);
     if (!flexChannelCreatedSid){
       console.log("Couldn't create channel");
@@ -23,8 +26,8 @@ exports.handler = async (context, event, callback) => {
     let resp = await sendChatMessage(
       flexChatService,
       flexChannelCreatedSid,
-      fromNumber,
-      msg
+      channelData.fromNumber,
+      channelData.msg
     );
     console.log("resp:",resp);
 
