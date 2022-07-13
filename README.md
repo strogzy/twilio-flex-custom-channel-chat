@@ -24,11 +24,19 @@ Related blog post: https://www.twilio.com/blog/add-custom-chat-channel-twilio-fl
 
 Now the URL given as a result for the deploy command, specifically the url for the `/message` function can be used for sending messages into Flex. 
 
+## Structure
+
+`/functions`
+In /functions you will find the code for Twilio Serverless functions which will act as the middleware between Twilio and Telerivet and will handle inbound and outbound messaging.
+
+
+
 ## Connectors
 
 Currently this repo has adapters for the following custom channels:
 - Viber
 - Telerivet
+- Telegram
 
 
 
