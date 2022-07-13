@@ -56,6 +56,13 @@ const checkChannel = (msg) =>{
     msgData.msg = msg.message.text;
     msgData.channel = 'viber';
   }
+  else if (msg.message.chat.id){
+    // telegram
+    msgData.fromNumber = msg.message.chat.id;
+    msgData.msg = msg.message.text;
+    msgData.channel = 'telegram';
+
+  }
   return msgData;
 
 }

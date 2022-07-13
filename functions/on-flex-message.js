@@ -10,6 +10,8 @@ exports.handler = async (context, event, callback) =>{
   let client = context.getTwilioClient();
   const {sendThroughViber} = require(Runtime.getFunctions()['adapters/viber'].path); 
   const {sendThroughTelerivet} = require(Runtime.getFunctions()['adapters/telerivet'].path); 
+  const {sendThroughTelegram} = require(Runtime.getFunctions()['adapters/telegram'].path); 
+  
 
   if (event.Source === 'SDK' ) {
     console.log('chat message from Flex:', event.Body);
@@ -33,9 +35,11 @@ exports.handler = async (context, event, callback) =>{
         else if (channel == 'viber' ){
           resp = await sendThroughViber(message, m.identity);
         }
-        
         console.log("sending response", resp);
         
+      }
+      else if (channel == 'telegram' ){
+        resp = await sendThroughTelegram(message, m.identity);
       }
     }
   }
