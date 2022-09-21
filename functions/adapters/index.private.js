@@ -37,6 +37,12 @@
 // }
 const trSecret = process.env.TELERIVET_SECRET;
 
+const channels = [
+  'telerivet',
+  'viber',
+  'telegram'
+]
+
 const checkChannel = (msg) =>{
   const msgData = {
     fromNumber: '',
@@ -44,25 +50,30 @@ const checkChannel = (msg) =>{
     channel: '',
   }
 
-  if (msg.secret == trSecret && msg.event == "incoming_message" && msg.message_type == "sms"){
-    // based on the params likely to be a msg from Telerivet
-    msgData.fromNumber = msg.from_number;
-    msgData.msg = msg.content;
-    msgData.channel = 'telerivet';
+  if (msg.channel && channels.includes(msg.channel) ){
+    const msgDataFilled = getDataByChannel(msg, msgData)
   }
-  else if (msg.phone_number && msg.message.text){
-    // likely to be viber
-    msgData.fromNumber = msg.phone_number;
-    msgData.msg = msg.message.text;
-    msgData.channel = 'viber';
-  }
-  else if (msg.message.chat.id){
-    // telegram
-    msgData.fromNumber = msg.message.chat.id;
-    msgData.msg = msg.message.text;
-    msgData.channel = 'telegram';
 
+
+  // if (msg.channel == 'telerivet' ){
+  //   // based on the params likely to be a msg from Telerivet
+  //   msgData.fromNumber = msg.from_number;
+  //   msgData.msg = msg.content;
+  //   msgData.channel = 'telerivet';
+  // }
+  else if ( msg.phone_number && msg.message.text){
+    // likely to be viber
+    // msgData.fromNumber = msg.phone_number;
+    // msgData.msg = msg.message.text;
+    // msgData.channel = 'viber';
   }
+  // else if (msg.message.chat.id){
+  //   // telegram
+  //   msgData.fromNumber = msg.message.chat.id;
+  //   msgData.msg = msg.message.text;
+  //   msgData.channel = 'telegram';
+
+  // }
   return msgData;
 
 }

@@ -26,5 +26,16 @@ const sendThroughViber = async (body, destination) =>{
 
   }
 
+  const receiveMessage = async (msg) => {
+    if (msg.channel == 'viber') {
+      // telerivet
+      msgData.fromNumber = msg.phone_number;
+      msgData.msg = msg.message.text;
+      msgData.channel = 'viber';
+      return msgData;
+    }
+    return null;
+  }
 
-module.exports =  {sendThroughViber};
+
+module.exports =  {sendThroughViber, receiveMessage};

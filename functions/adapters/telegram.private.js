@@ -15,4 +15,15 @@ const sendThroughTelegram = async (body, destination) =>{
   }
 
 
-module.exports =  {sendThroughTelegram};
+const receiveMessage = async(msg) =>{
+  if (msg.message.chat.id){
+    // telegram
+    msgData.fromNumber = msg.message.chat.id;
+    msgData.msg = msg.message.text;
+    msgData.channel = 'telegram';
+    return msgData; 
+  }
+  return null;
+}
+
+module.exports =  {sendThroughTelegram, receiveMessage};

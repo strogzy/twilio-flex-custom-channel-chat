@@ -7,29 +7,40 @@ const telerivet_url = `${process.env.TELERIVET_SERVICE_URL}${project_id}/message
 const trAPIkey = process.env.TELERIVET_API_KEY;
 
 
-const sendThroughTelerivet = async (body, destination) =>{
-  
+const sendThroughTelerivet = async (body, destination) => {
+
   console.log("send a message ", destination, telerivet_url);
 
   let msg_req = {
-    "to_number":`${destination}`, 
-    "content":`${body}`, 
-    }
- 
+    "to_number": `${destination}`,
+    "content": `${body}`,
+  }
+
   let resp = await axios(
     {
-    method:'post',
-    url: telerivet_url,
-    data: msg_req,
-    headers:{
+      method: 'post',
+      url: telerivet_url,
+      data: msg_req,
+      headers: {
         Authorization: `Basic ${base64.encode(`${trAPIkey}:`)}`,
         "Content-Type": 'application/json'
-        }
-  });
+      }
+    });
   console.log("rest", resp.data, resp.config);
   return resp;
 
+}
+
+const receiveMessage = async (msg) => {
+  if (msg.channel == 'telerivet') {
+    // telerivet
+    msgData.fromNumber = msg.from_number;
+    msgData.msg = msg.content;
+    msgData.channel = 'telerivet';
+    return msgData;
   }
+  return null;
+}
 
 
-module.exports =  {sendThroughTelerivet};
+module.exports = { sendThroughTelerivet, receiveMessage };
